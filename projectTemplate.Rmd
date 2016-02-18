@@ -14,7 +14,8 @@ library(ggplot2)
 
 ```{r echo=FALSE, Load_the_Data}
 # Load the Data
-
+setwd("E:/Dropbox/estudios/dataAnalyst/p4/p4_explore")
+wq <- read.csv('wineQualityReds.csv')
 ```
 
 # Univariate Plots Section
