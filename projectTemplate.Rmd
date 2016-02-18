@@ -10,17 +10,44 @@ TITLE by YOUR_NAME_HERE
 # You should set echo=FALSE for all code chunks in your file.
 
 library(ggplot2)
+library(plyr)
 ```
 
 ```{r echo=FALSE, Load_the_Data}
 # Load the Data
 setwd("E:/Dropbox/estudios/dataAnalyst/p4/p4_explore")
-wq <- read.csv('wineQualityReds.csv')
+reds <- read.csv('wineQualityReds.csv')
 ```
+
+# Data Description Section
+```{r}
+names(reds)
+```
+
+The variable "X" is not mentioned in the text file describing the dataset. A quick look at the dataframe reveals that it is just a unique id for every observation. It may be useful later, so we can keep it but change the name in order to avoid confusion.
+
+```{r}
+reds <- rename(reds, c("X"="id"))
+str(reds)
+```
+
+It looks like all free.sulfur.dioxide and total.sulfur.dioxide values are whole numbers. It turns out this is true except for a few cases within each variable, all of them having exactly half a unit more:
+
+```{r}
+with(reds, subset(free.sulfur.dioxide, free.sulfur.dioxide %% 1 != 0))
+with(reds, subset(total.sulfur.dioxide, total.sulfur.dioxide %% 1 != 0))
+```
+
+My guess is that this is due to these two variables being measured in (mg / dm^3), while the rest are in (g / dm^3). I suppose that more precision is not needed and/or impossible to measure with the available resources.
+
+```{r}
+summary(reds)
+```
+
+There are some variables with possible outliers: volatile.acidity, citric.acid, residual.sugar, chlorides, free and total.sulfur.dioxide and sulphates have maximum valures that are far away from the third quartile.
 
 # Univariate Plots Section
 ```{r echo=FALSE, Univariate_Plots}
-
 ```
 
 # Univariate Analysis
