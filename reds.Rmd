@@ -48,6 +48,66 @@ There are some variables with possible outliers: volatile.acidity, citric.acid, 
 
 # Univariate Plots Section
 ```{r echo=FALSE, Univariate_Plots}
+ggplot(data = reds, aes(x = fixed.acidity)) +
+  geom_histogram(binwidth = 0.5) +
+  scale_x_continuous(breaks = seq(4, 16, 1), limits = c(4, 16))
+```
+
+```{r}
+ggplot(data = reds, aes(x = volatile.acidity)) +
+  geom_histogram(binwidth = 0.05)
+```
+
+
+```{r}
+ggplot(data = reds, aes(x = citric.acid)) +
+  geom_histogram(binwidth = 0.05)
+```
+
+
+```{r}
+ggplot(data = reds, aes(x = residual.sugar)) +
+  geom_histogram(binwidth = 0.1)
+```
+
+```{r}
+ggplot(data = reds, aes(x = chlorides)) +
+  geom_histogram(binwidth = 0.005)
+```
+
+```{r}
+ggplot(data = reds, aes(x = free.sulfur.dioxide)) +
+  geom_histogram(binwidth = 1)
+```
+
+```{r}
+ggplot(data = reds, aes(x = total.sulfur.dioxide)) +
+  geom_histogram(binwidth = 5)
+```
+
+```{r}
+ggplot(data = reds, aes(x = density)) +
+  geom_histogram(binwidth = 0.0005)
+```
+
+```{r}
+ggplot(data = reds, aes(x = pH)) +
+  geom_histogram(binwidth = 0.05)
+```
+
+```{r}
+ggplot(data = reds, aes(x = sulphates)) +
+  geom_histogram(binwidth = 0.05)
+```
+
+```{r}
+ggplot(data = reds, aes(x = alcohol)) +
+  geom_histogram(binwidth = 0.1)
+```
+
+```{r}
+ggplot(data = reds, aes(x = quality)) +
+  geom_histogram(binwidth = 0.5)
 ```
 
 # Univariate Analysis
