@@ -60,6 +60,8 @@ ggplot(data = reds, aes(x = volatile.acidity)) +
   scale_x_continuous(breaks = seq(0, 2, 0.1), limits = c(0, 2))
 ```
 
+The variables fixed.acidity and volatile.acidity look normally distributed.
+
 
 ```{r}
 c1 <- ggplot(data = reds, aes(x = citric.acid)) +
@@ -72,6 +74,8 @@ c2 <- ggplot(data = reds, aes(x = citric.acid)) +
 
 grid.arrange(c1, c2, ncol=1)
 ```
+
+The variable citric.acid is very skewed to the right. The log transform shows a peak between 0.4 and 0.6.
 
 
 ```{r}
@@ -86,19 +90,43 @@ grid.arrange(r1, r2, ncol=1)
 ```
 
 ```{r}
-ggplot(data = reds, aes(x = chlorides)) +
+ch1 <- ggplot(data = reds, aes(x = chlorides)) +
   geom_histogram(binwidth = 0.005)
+
+ch2 <- ggplot(data = reds, aes(x = chlorides)) +
+  geom_histogram(binwidth = 0.005) +
+  scale_x_continuous(breaks = seq(0, 0.15, 0.05), limits = c(0, 0.15))
+
+grid.arrange(ch1, ch2, ncol=1)
+```
+
+The variables residual.sugar and chlorides look normally distributed, but both have very distant outliers. 
+
+```{r}
+fsd1 <- ggplot(data = reds, aes(x = free.sulfur.dioxide)) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = seq(0, 80, 5))
+
+fsd2 <- ggplot(data = reds, aes(x = free.sulfur.dioxide)) +
+  geom_histogram(binwidth = 0.1) +
+  scale_x_log10(breaks = seq(0, 80, 10))
+
+grid.arrange(fsd1, fsd2, ncol=1)
 ```
 
 ```{r}
-ggplot(data = reds, aes(x = free.sulfur.dioxide)) +
-  geom_histogram(binwidth = 1)
+tsd1 <- ggplot(data = reds, aes(x = total.sulfur.dioxide)) +
+  geom_histogram(binwidth = 5) +
+  scale_x_continuous(breaks = seq(0, 290, 10))
+
+tsd2 <- ggplot(data = reds, aes(x = total.sulfur.dioxide)) +
+  geom_histogram(binwidth = 0.1) +
+  scale_x_log10(breaks = seq(0, 290, 25))
+
+grid.arrange(tsd1, tsd2, ncol=1)
 ```
 
-```{r}
-ggplot(data = reds, aes(x = total.sulfur.dioxide)) +
-  geom_histogram(binwidth = 5)
-```
+Both free.sulfur.dioxide and total.sulfur.dioxide are skewed to the right. The last has very distant outliers. They look normally distributed when a log-transform is applied.
 
 ```{r}
 ggplot(data = reds, aes(x = density)) +
@@ -110,32 +138,59 @@ ggplot(data = reds, aes(x = pH)) +
   geom_histogram(binwidth = 0.05)
 ```
 
+Both density and pH look normally distributed.
+
 ```{r}
 ggplot(data = reds, aes(x = sulphates)) +
   geom_histogram(binwidth = 0.05)
 ```
 
+The variable sulphates look normally distributed, with some outliers.
+
 ```{r}
-ggplot(data = reds, aes(x = alcohol)) +
+a1 <- ggplot(data = reds, aes(x = alcohol)) +
   geom_histogram(binwidth = 0.1)
+
+a2 <- ggplot(data = reds, aes(x = alcohol)) +
+  geom_histogram(binwidth = 0.01) +
+  scale_x_log10()
+
+grid.arrange(a1, a2, ncol=1)
 ```
+
+The variable alcohol is skewed to the right. Applying a log-transform does not change much.
 
 ```{r}
 ggplot(data = reds, aes(x = quality)) +
-  geom_histogram(binwidth = 0.5)
+  geom_bar() +
+  scale_x_discrete(breaks = seq(0, 10, 1))
 ```
+
+An overwhelming majority of wines, about 1300 of the total 1599, are rated 5 or 6, and about 200 are rated 7. The rest are rated 3, 4 or 8.
 
 # Univariate Analysis
 
 ### What is the structure of your dataset?
 
+There are 1599 red wines in the dataset with 12 features and an identifier number. Except quality, which is discrete, the rest of the features are continuous, althogh most of the values of free.sulfur.dioxide and total.sulfur.dioxide are whole.
+
 ### What is/are the main feature(s) of interest in your dataset?
 
+The main feature is quality. I would like to know if and which ones of the other features can help determine the quality of a red wine.
+
 ### What other features in the dataset do you think will help support your investigation into your feature(s) of interest?
+
+The info provided by the authors of the dataset gives a few tips about which variables can affect the quality of the wine (volatile acidity, the combination of free and total sulfur dioxide, sulphates...) but it is far from comprehensive.
+
+Given that most wines are rated of medium quality (5 or 6 in a scale of 0 to 10), and the fact that there are several variables with very distant outliers, points me to think that very small or very large values of certain variables are fundamental in the creation of non-average wines.
 
 ### Did you create any new variables from existing variables in the dataset?
 
 ### Of the features you investigated, were there any unusual distributions? Did you perform any operations on the data to tidy, adjust, or change the form of the data? If so, why did you do this?
+
+There were some right-skewed distributions. I applied a log-transform to get better insights about the distributions.
+
+Several variables had large outliers. I created a cropped version of some of them to have more details of the bulk of the data.
 
 
 
