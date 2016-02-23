@@ -32,6 +32,11 @@ reds <- rename(reds, c("X"="id"))
 str(reds)
 ```
 
+```{r}
+reds$quality <- factor(reds$quality)
+```
+
+
 It looks like all free.sulfur.dioxide and total.sulfur.dioxide values are whole numbers. It turns out this is true except for a few cases within each variable, all of them having exactly half a unit more:
 
 ```{r}
@@ -196,7 +201,14 @@ Several variables had large outliers. I created a cropped version of some of the
 
 # Bivariate Plots Section
 ```{r echo=FALSE, Bivariate_Plots}
+library(ggplot2)
+library(GGally)
+library(scales)
+library(memisc)
 
+ggpairs(subset(reds, select = -id), 
+  lower = list(continuous = wrap("points", shape = I('.'))), 
+  upper = list(combo = wrap("box", outlier.shape = I('.'))))
 ```
 
 # Bivariate Analysis
