@@ -28,7 +28,7 @@ names(reds)
 The variable "X" is not mentioned in the text file describing the dataset. A quick look at the dataframe reveals that it is just a unique id for every observation. It may be useful later, so we can keep it but change the name in order to avoid confusion.
 
 ```{r}
-reds <- rename(reds, c("X"="id"))
+reds <- plyr::rename(reds, c("X"="id"))
 str(reds)
 ```
 
@@ -200,6 +200,7 @@ Several variables had large outliers. I created a cropped version of some of the
 
 
 # Bivariate Plots Section
+
 ```{r echo=FALSE, Bivariate_Plots}
 library(ggplot2)
 library(GGally)
@@ -210,6 +211,21 @@ ggpairs(subset(reds, select = -id),
   lower = list(continuous = wrap("points", shape = I('.'))), 
   upper = list(combo = wrap("box", outlier.shape = I('.'))))
 ```
+
+The boxplots in the matrix show correlations between quality and other variables: volatile.acidity, citric.acid, sulphates and alcohol. The variables density and pH might be related too, but this could be because these variables are correlated with others: pH with citric.acid and density with alcohol and citric.acid.
+
+We are going to look closer into all this.
+
+```{r}
+ggplot(data = reds, aes(y = volatile.acidity, x = quality)) +
+  geom_boxplot()
+```
+
+It looks like as volatile acidity increases, quality decreases, although there are two observations worth mentioning:
+- Wines with a quality score of 7 and 8 (the best of the dataset) have similar median volatile acidity. However, the volatile acidity of wines with a quality of 7 is more dispersed.
+- Outliers in wines with a quality of 7 and 8 have a volatile acidity similar to the median of the worst rated wines (score of 3): volatile acidity alone cannot explain the differences in quality.
+
+These findings agree with the information provided by the authors of the dataset: "too high levels can lead to an unpleasant, vinegar taste".
 
 # Bivariate Analysis
 
