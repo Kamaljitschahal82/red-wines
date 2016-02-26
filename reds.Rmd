@@ -12,6 +12,10 @@ TITLE by YOUR_NAME_HERE
 library(ggplot2)
 library(plyr)
 library(gridExtra)
+library(ggplot2)
+library(GGally)
+library(scales)
+library(memisc)
 ```
 
 ```{r echo=FALSE, Load_the_Data}
@@ -202,11 +206,6 @@ Several variables had large outliers. I created a cropped version of some of the
 # Bivariate Plots Section
 
 ```{r echo=FALSE, Bivariate_Plots}
-library(ggplot2)
-library(GGally)
-library(scales)
-library(memisc)
-
 ggpairs(subset(reds, select = -id), 
   lower = list(continuous = wrap("points", shape = I('.'))), 
   upper = list(combo = wrap("box", outlier.shape = I('.'))))
@@ -223,9 +222,45 @@ ggplot(data = reds, aes(y = volatile.acidity, x = quality)) +
 
 It looks like as volatile acidity increases, quality decreases, although there are two observations worth mentioning:
 - Wines with a quality score of 7 and 8 (the best of the dataset) have similar median volatile acidity. However, the volatile acidity of wines with a quality of 7 is more dispersed.
-- Outliers in wines with a quality of 7 and 8 have a volatile acidity similar to the median of the worst rated wines (score of 3): volatile acidity alone cannot explain the differences in quality.
+- Outliers with a quality of 7 and 8 have a volatile acidity similar to the median of the worst rated wines (score of 3): volatile acidity alone cannot explain the differences in quality.
 
 These findings agree with the information provided by the authors of the dataset: "too high levels can lead to an unpleasant, vinegar taste".
+
+```{r}
+ggplot(data = reds, aes(y = citric.acid, x = quality)) +
+  geom_boxplot()
+```
+
+The variables quality and citric.acid are positively correlated. However, wines with a quality score of 7 or 8 present very similar levels of citric acid. For the rest, the amount of citric acid is very dispersed, although the median citric acid quantity for low quality wines is very low.
+
+```{r}
+ggplot(data = reds, aes(y = alcohol, x = quality)) +
+  geom_boxplot()
+```
+
+It looks like the higher the amount of alcohol content in a wine, the better the score it receives, but this effect only appears in wines with a quality of 6 or more, having the rest similar median values. There are a lot of outliers with a high percent of alcohol between the wines of quality 5.
+
+
+```{r}
+ggplot(data = reds, aes(y = sulphates, x = quality)) +
+  geom_boxplot()
+```
+
+The amount of sulphates is slightly positively correlated with the quality of the wine, but the effect is not as pronounced as with the other variables mentioned above. There are a lot of outliers.
+
+```{r}
+ggplot(data = reds, aes(y = density, x = quality)) +
+  geom_boxplot()
+```
+
+It seems to exist a mild negative correlation between density and quality. I doubt the experts can detect such small variations in density between different wines, or even care about it. My guess is that this is due to density being correlated with other influential variables, like alcohol, or just pure randomness.
+
+```{r}
+ggplot(data = reds, aes(y = pH, x = quality)) +
+  geom_boxplot()
+```
+
+This is similar to the last case. Maybe this is cause by the existing negative correlation between pH and citric.acid.
 
 # Bivariate Analysis
 
