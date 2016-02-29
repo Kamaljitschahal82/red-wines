@@ -262,6 +262,29 @@ ggplot(data = reds, aes(y = pH, x = quality)) +
 
 This is similar to the last case. Maybe this is cause by the existing negative correlation between pH and citric.acid.
 
+There are correlations of moderate strength (~ 0.5) (REFERENCIA AQUÍ) between some of these variables. It might be interesting to have a closer look:
+
+```{r}
+ggplot(data = reds, aes(y = volatile.acidity, x = citric.acid)) +
+  geom_point()
+```
+
+```{r}
+ggplot(data = reds, aes(y = pH, x = citric.acid)) +
+  geom_point()
+```
+
+Both volatile.acidity and pH are negatively correlated with citric.acid. The latter makes sense: low pH values indicate acidity.
+
+The relation between acetic acid (volatile.acidity) and citric acid is not that clear. Acordding to Wikipedia (REFERENCIA AQUÍ): "When citric acid is added, it is always done after primary alcohol fermentation has been completed due to the tendency of yeast to convert citric into acetic acid." Maybe low levels of citric acid are a sign that it was added prematurely.
+
+```{r}
+ggplot(data = reds, aes(y = density, x = alcohol)) +
+  geom_point()
+```
+
+High levels of alcohol are asociated with low density, which makes sense, since alcohol is less dense than water: the main component of wine. (REFERENCIA AQUÍ)
+
 # Bivariate Analysis
 
 ### Talk about some of the relationships you observed in this part of the investigation. How did the feature(s) of interest vary with other features in the dataset?
