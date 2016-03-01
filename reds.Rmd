@@ -297,7 +297,7 @@ ggplot(data = reds, aes(y = pH, x = quality)) +
   geom_boxplot()
 ```
 
-This is similar to the last case. Maybe this is cause by the existing negative correlation between pH and citric.acid.
+This is similar to the last case. Can we detect with our sense of taste differences in pH of one unit maximum?. Maybe this is cause by the existing negative correlation between pH and citric.acid.
 
 There are correlations of moderate strength (~ 0.5) (REFERENCIA AQUÍ) between some of these variables. It might be interesting to have a closer look:
 
@@ -326,14 +326,23 @@ High levels of alcohol are asociated with low density, which makes sense, since 
 
 ### Talk about some of the relationships you observed in this part of the investigation. How did the feature(s) of interest vary with other features in the dataset?
 
+The data suggests that alcohol, citric.acid and volatile.acidity are the most decisive features for the quality of a wine, having the first two a positive correlation with quality and the latter a negative one. However, a far from negligible number of wines of any quality can be found along (almost) the whole spectrum of these features: none of them alone nor combined can fully explain quality, not even close.
 
+Another three features are weakly (~ +-0.2) correlated with quality: sulphates, density and pH.
 
 ### Did you observe any interesting relationships between the other features (not the main feature(s) of interest)?
 
+Citric.acid is negatively correlated with both volatile.acidity and pH (~ -0.5). Alcohol is inversely correlated with density (~ 0.5). This may explain why density and pH, that are (I presume) hard to detect without tools are correlated with quality, even if weakly.
+
 ### What was the strongest relationship you found?
 
+It is not easy to say between the three that are mentioned above. The overall strength of the relationships between quality and alcohol, citric.acid and volatile.acidity is similar. However, these relationships are not exactly linear:
 
+- Wines of the highest qualities (7 and 8) share similar levels of acetic acid (volatile.acidity). Maybe low quantities of acetic acid (below approximately 0.4 g /dm^3) do not influence quality.
 
+- In a similar fashion, the upward trend of citric.acid with respect to quality seem to flatten at approximately 0.4 g/dm^3. 
+
+- The median quantity of alcohol in the lowest quality wines (3, 4 and 5) is similar. There is an upward trend after that.
 
 # Multivariate Plots Section
 
