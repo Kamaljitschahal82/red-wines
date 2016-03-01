@@ -220,6 +220,16 @@ ggplot(data = reds, aes(y = volatile.acidity, x = quality)) +
   geom_boxplot()
 ```
 
+```{r}
+v1 <- ggplot(data = reds, aes(volatile.acidity, colour = quality)) +
+  geom_freqpoly(binwidth = 0.05)
+v2 <- ggplot(data = reds, aes(volatile.acidity, fill = quality)) +
+  geom_histogram(binwidth = 0.05)
+
+grid.arrange(v1, v2, ncol=1)
+```
+
+
 It looks like as volatile acidity increases, quality decreases, although there are two observations worth mentioning:
 - Wines with a quality score of 7 and 8 (the best of the dataset) have similar median volatile acidity. However, the volatile acidity of wines with a quality of 7 is more dispersed.
 - Outliers with a quality of 7 and 8 have a volatile acidity similar to the median of the worst rated wines (score of 3): volatile acidity alone cannot explain the differences in quality.
@@ -231,11 +241,29 @@ ggplot(data = reds, aes(y = citric.acid, x = quality)) +
   geom_boxplot()
 ```
 
+```{r}
+c1 <- ggplot(data = reds, aes(citric.acid, colour = quality)) +
+  geom_freqpoly(binwidth = 0.05)
+c2 <- ggplot(data = reds, aes(citric.acid, fill = quality)) +
+  geom_histogram(binwidth = 0.05)
+
+grid.arrange(c1, c2, ncol=1)
+```
+
 The variables quality and citric.acid are positively correlated. However, wines with a quality score of 7 or 8 present very similar levels of citric acid. For the rest, the amount of citric acid is very dispersed, although the median citric acid quantity for low quality wines is very low.
 
 ```{r}
 ggplot(data = reds, aes(y = alcohol, x = quality)) +
   geom_boxplot()
+```
+
+```{r}
+a1 <- ggplot(data = reds, aes(alcohol, colour = quality)) +
+  geom_freqpoly(binwidth = 0.1)
+a2 <- ggplot(data = reds, aes(alcohol, fill = quality)) +
+  geom_histogram(binwidth = 0.1)
+
+grid.arrange(a1, a2, ncol=1)
 ```
 
 It looks like the higher the amount of alcohol content in a wine, the better the score it receives, but this effect only appears in wines with a quality of 6 or more, having the rest similar median values. There are a lot of outliers with a high percent of alcohol between the wines of quality 5.
@@ -244,6 +272,15 @@ It looks like the higher the amount of alcohol content in a wine, the better the
 ```{r}
 ggplot(data = reds, aes(y = sulphates, x = quality)) +
   geom_boxplot()
+```
+
+```{r}
+s1 <- ggplot(data = reds, aes(sulphates, colour = quality)) +
+  geom_freqpoly(binwidth = 0.05)
+s2 <- ggplot(data = reds, aes(sulphates, fill = quality)) +
+  geom_histogram(binwidth = 0.05)
+
+grid.arrange(s1, s2, ncol=1)
 ```
 
 The amount of sulphates is slightly positively correlated with the quality of the wine, but the effect is not as pronounced as with the other variables mentioned above. There are a lot of outliers.
@@ -288,6 +325,8 @@ High levels of alcohol are asociated with low density, which makes sense, since 
 # Bivariate Analysis
 
 ### Talk about some of the relationships you observed in this part of the investigation. How did the feature(s) of interest vary with other features in the dataset?
+
+
 
 ### Did you observe any interesting relationships between the other features (not the main feature(s) of interest)?
 
