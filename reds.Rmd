@@ -347,7 +347,29 @@ It is not easy to say between the three that are mentioned above. The overall st
 # Multivariate Plots Section
 
 ```{r echo=FALSE, Multivariate_Plots}
+p1 <- ggplot(data = reds, aes(y = citric.acid, x = alcohol, colour=quality)) +
+  geom_point(size=3)
 
+p2 <- ggplot(data = reds, aes(y = volatile.acidity, x = alcohol, colour=quality)) +
+  geom_point(size=3)
+
+p3 <- ggplot(data = reds, aes(y = volatile.acidity, x = citric.acid, colour=quality)) +
+  geom_point(size=3)
+
+grid.arrange(p1, p2, p3, ncol=1)
+```
+
+```{r echo=FALSE, Multivariate_Plots}
+ps1 <- ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = citric.acid, x = alcohol, colour=quality)) +
+  geom_point(size=3)
+
+ps2 <- ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = volatile.acidity, x = alcohol, colour=quality)) +
+  geom_point(size=3)
+
+ps3 <- ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = volatile.acidity, x = citric.acid, colour=quality)) +
+  geom_point(size=3)
+
+grid.arrange(ps1, ps2, ps3, ncol=1)
 ```
 
 # Multivariate Analysis
