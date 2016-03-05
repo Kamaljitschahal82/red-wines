@@ -359,18 +359,37 @@ p3 <- ggplot(data = reds, aes(y = volatile.acidity, x = citric.acid, colour=qual
 grid.arrange(p1, p2, p3, ncol=1)
 ```
 
+Scatter plots of the main variables, colored by quality. We can see the linear correlation between volatile.acidity and linear.acid, mention aboved, and also that there is no linear correlation between alcohol and citric.acid. Unfortunately, there are so many wines of quality 5 and 6 that it is hard to grasp more detailed information. We are going to examine these same plots, but removing these wines:
+
 ```{r echo=FALSE, Multivariate_Plots}
-ps1 <- ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = citric.acid, x = alcohol, colour=quality)) +
+ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = citric.acid, x = alcohol, colour=quality)) +
   geom_point(size=3)
-
-ps2 <- ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = volatile.acidity, x = alcohol, colour=quality)) +
-  geom_point(size=3)
-
-ps3 <- ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = volatile.acidity, x = citric.acid, colour=quality)) +
-  geom_point(size=3)
-
-grid.arrange(ps1, ps2, ps3, ncol=1)
 ```
+
+High quality wines tend to concentrate in the upper-right part of the plot. The opposite happens with bad quality ones. As suggested before, high values of alcohol and citric.acid are influential in the quality of the wine.
+
+```{r echo=FALSE, Multivariate_Plots}
+ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = volatile.acidity, x = alcohol, colour=quality)) +
+  geom_point(size=3)
+```
+
+The plot shows that bad quality wines tend to have more than 0.6 g / dm^3 of acetic acid, while the bulk of high quality wines are below this point. 
+
+```{r echo=FALSE, Multivariate_Plots}
+ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = volatile.acidity, x = citric.acid, colour=quality)) +
+  geom_point(size=3)
+```
+
+As expected, the plot shows that high volatile.acidity and low citric.acid is usually an indicator of bad quality.
+
+We can visualize all these features together in the same plot:
+
+```{r}
+ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = citric.acid, x = alcohol, colour=quality, size=volatile.acidity)) +
+  geom_point()
+```
+
+It looks like the plot confirms everything suggested by the rest of the analyisis: bad quality wines tend to have high values of volatile.acidity and low values of alcohol and citric.acid.
 
 # Multivariate Analysis
 
