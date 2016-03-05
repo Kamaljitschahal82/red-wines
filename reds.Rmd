@@ -362,21 +362,22 @@ grid.arrange(p1, p2, p3, ncol=1)
 Scatter plots of the main variables, colored by quality. We can see the linear correlation between volatile.acidity and linear.acid, mention aboved, and also that there is no linear correlation between alcohol and citric.acid. Unfortunately, there are so many wines of quality 5 and 6 that it is hard to grasp more detailed information. We are going to examine these same plots, but removing these wines:
 
 ```{r echo=FALSE, Multivariate_Plots}
-ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = citric.acid, x = alcohol, colour=quality)) +
+df.extreme.quality <- subset(reds, quality != 6 & quality != 5)
+ggplot(data = df.extreme.quality, aes(y = citric.acid, x = alcohol, colour=quality)) +
   geom_point(size=3)
 ```
 
 High quality wines tend to concentrate in the upper-right part of the plot. The opposite happens with bad quality ones. As suggested before, high values of alcohol and citric.acid are influential in the quality of the wine.
 
 ```{r echo=FALSE, Multivariate_Plots}
-ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = volatile.acidity, x = alcohol, colour=quality)) +
+ggplot(data = df.extreme.quality, aes(y = volatile.acidity, x = alcohol, colour=quality)) +
   geom_point(size=3)
 ```
 
 The plot shows that bad quality wines tend to have more than 0.6 g / dm^3 of acetic acid, while the bulk of high quality wines are below this point. 
 
 ```{r echo=FALSE, Multivariate_Plots}
-ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = volatile.acidity, x = citric.acid, colour=quality)) +
+ggplot(data = df.extreme.quality, aes(y = volatile.acidity, x = citric.acid, colour=quality)) +
   geom_point(size=3)
 ```
 
@@ -385,7 +386,7 @@ As expected, the plot shows that high volatile.acidity and low citric.acid is us
 We can visualize all these features together in the same plot:
 
 ```{r}
-ggplot(data = subset(reds, quality != 6 & quality != 5), aes(y = citric.acid, x = alcohol, colour=quality, size=volatile.acidity)) +
+ggplot(data = df.extreme.quality, aes(y = citric.acid, x = alcohol, colour=quality, size=volatile.acidity)) +
   geom_point()
 ```
 
