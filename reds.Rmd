@@ -400,7 +400,13 @@ It looks like the plot confirms everything suggested by the rest of the analyisi
 
 ### Talk about some of the relationships you observed in this part of the investigation. Were there features that strengthened each other in terms of looking at your feature(s) of interest?
 
+The three most influential features (alcohol, citric.acid and volatile.acidity) strength each other: the bulk of high quality wines are in the medium-high range in alcohol and citric.acid quantity, and their volatile.acidity is in the medium-low range. The ones with the highest quality (eight) tend to concentrate even more on the extremes. The opposite situation happens with bad quality wines.
+
 ### Were there any interesting or surprising interactions between features?
+
+It looks like very high volatile.acidity values almost completely prevent a wine to achieve a high quality rating. There are some high rated wines with very low citric acid and alcohol content, and even with a slightly high volatile acidity (~0.8), but higher than that there is almost none. 
+
+It is like there is a threshold at approximately 0.8-0.9 g/dm^3 of acetic acid from which the unpleasant vinegar taste, described by the authors of the dataset, is noted.
 
 ### OPTIONAL: Did you create any models with your dataset? Discuss the strengths and limitations of your model.
 
