@@ -36,6 +36,8 @@ reds <- plyr::rename(reds, c("X"="id"))
 str(reds)
 ```
 
+The variable quality has a very limited number of values. We can convert it to a factor:
+
 ```{r}
 reds$quality <- factor(reds$quality)
 ```
@@ -194,6 +196,8 @@ The info provided by the authors of the dataset gives a few tips about which var
 Given that most wines are rated of medium quality (5 or 6 in a scale of 0 to 10), and the fact that there are several variables with very distant outliers, points me to think that very small or very large values of certain variables are fundamental in the creation of non-average wines.
 
 ### Did you create any new variables from existing variables in the dataset?
+
+No. At this point, I cannot think of any useful transformation or combination of the current variables that results in a new one.
 
 ### Of the features you investigated, were there any unusual distributions? Did you perform any operations on the data to tidy, adjust, or change the form of the data? If so, why did you do this?
 
