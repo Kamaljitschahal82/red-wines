@@ -1,5 +1,11 @@
-TITLE by YOUR_NAME_HERE
+Red Wines Exploration by David del Río Medina
 ========================================================
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=12, fig.height=8, width = 200,
+                      echo=FALSE, warning=FALSE, message=FALSE)
+```
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
 # Load all of the packages that you end up using
@@ -9,7 +15,6 @@ TITLE by YOUR_NAME_HERE
 # This prevents the code from displaying in the knitted HTML output.
 # You should set echo=FALSE for all code chunks in your file.
 
-library(ggplot2)
 library(plyr)
 library(gridExtra)
 library(ggplot2)
@@ -20,7 +25,8 @@ library(memisc)
 
 ```{r echo=FALSE, Load_the_Data}
 # Load the Data
-setwd("E:/Dropbox/estudios/dataAnalyst/p4/p4_explore")
+#setwd("E:/Dropbox/estudios/dataAnalyst/p4/p4_explore")
+setwd("C:/Users/Administrador/Dropbox/estudios/dataAnalyst/p4/p4_explore")
 reds <- read.csv('wineQualityReds.csv')
 ```
 
@@ -365,7 +371,7 @@ grid.arrange(p1, p2, p3, ncol=1)
 
 Scatter plots of the main variables, colored by quality. We can see the linear correlation between volatile.acidity and linear.acid, mention aboved, and also that there is no linear correlation between alcohol and citric.acid. Unfortunately, there are so many wines of quality 5 and 6 that it is hard to grasp more detailed information. We are going to examine these same plots, but removing these wines:
 
-```{r echo=FALSE, Multivariate_Plots}
+```{r echo=FALSE}
 df.extreme.quality <- subset(reds, quality != 6 & quality != 5)
 ggplot(data = df.extreme.quality, aes(y = citric.acid, x = alcohol, colour=quality)) +
   geom_point(size=3)
@@ -373,14 +379,14 @@ ggplot(data = df.extreme.quality, aes(y = citric.acid, x = alcohol, colour=quali
 
 High quality wines tend to concentrate in the upper-right part of the plot. The opposite happens with bad quality ones. As suggested before, high values of alcohol and citric.acid are influential in the quality of the wine.
 
-```{r echo=FALSE, Multivariate_Plots}
+```{r echo=FALSE}
 ggplot(data = df.extreme.quality, aes(y = volatile.acidity, x = alcohol, colour=quality)) +
   geom_point(size=3)
 ```
 
 The plot shows that bad quality wines tend to have more than 0.6 g / dm^3 of acetic acid, while the bulk of high quality wines are below this point. 
 
-```{r echo=FALSE, Multivariate_Plots}
+```{r echo=FALSE}
 ggplot(data = df.extreme.quality, aes(y = volatile.acidity, x = citric.acid, colour=quality)) +
   geom_point(size=3)
 ```
@@ -394,7 +400,9 @@ ggplot(data = df.extreme.quality, aes(y = citric.acid, x = alcohol, colour=quali
   geom_point()
 ```
 
-It looks like the plot confirms everything suggested by the rest of the analyisis: bad quality wines tend to have high values of volatile.acidity and low values of alcohol and citric.acid.
+It seems the plot confirms everything suggested by the rest of the analyisis: bad quality wines tend to have high values of volatile.acidity and low values of alcohol and citric.acid.
+
+
 
 # Multivariate Analysis
 
@@ -408,34 +416,114 @@ It looks like very high volatile.acidity values almost completely prevent a wine
 
 It is like there is a threshold at approximately 0.8-0.9 g/dm^3 of acetic acid from which the unpleasant vinegar taste, described by the authors of the dataset, is noted.
 
-### OPTIONAL: Did you create any models with your dataset? Discuss the strengths and limitations of your model.
-
 ------
 
 # Final Plots and Summary
 
 ### Plot One
 ```{r echo=FALSE, Plot_One}
-
+ggplot(data = reds, aes(x = quality, fill = quality)) +
+  geom_bar() +
+  scale_y_continuous(breaks = seq(0, 700, 100)) +
+  scale_x_discrete(breaks = seq(0, 10, 1)) +
+  guides(fill = FALSE) +
+  ggtitle('Quality histogram') +
+  xlab('Quality') + 
+  ylab('Number of wines')
 ```
+
 
 ### Description One
 
+A very big majority of wines are of quality five or six. There are very few of quality three or eight, and no wine achieves a more extreme quality rating: of a scale of zero to ten, there are no wines with a quality rating of zero, one, two, nine or ten.
+
+This is probably due to the way the wines are rated. According to the information provided by the authors: "the output is based on sensory data (median of at least 3 evaluations made by wine experts)". Unfortunately, we do not have the individual evaluations for each wine, so we cannot know how dispersed are these.
 
 ### Plot Two
 ```{r echo=FALSE, Plot_Two}
+v1 <- ggplot(data = reds, aes(y = volatile.acidity, x = quality, fill = quality)) +
+  geom_boxplot() +
+  guides(fill = FALSE) +
+  ggtitle('Volatile acidity by quality') +
+  xlab('Quality') + 
+  ylab('Acetic acid content (g/dm^3)')
 
+v2 <- ggplot(data = reds, aes(volatile.acidity, colour = quality)) +
+  geom_freqpoly(binwidth = 0.05, size = 1) +
+  guides(colour = FALSE) +
+  xlab('Acetic acid content (g/dm^3)') + 
+  ylab('Number of wines')
+
+v3 <- ggplot(data = reds, aes(volatile.acidity, fill = quality)) +
+  geom_histogram(binwidth = 0.05) +
+  guides(fill = FALSE) +
+  xlab('Acetic acid content (g/dm^3)') + 
+  ylab('Number of wines')
+
+c1 <- ggplot(data = reds, aes(y = citric.acid, x = quality, fill = quality)) +
+  geom_boxplot() +
+  guides(fill = FALSE) +
+  ggtitle('Citric acid by quality') +
+  xlab('Quality') + 
+  ylab('Citric acid content (g/dm^3)')
+
+c2 <- ggplot(data = reds, aes(citric.acid, colour = quality)) +
+  geom_freqpoly(binwidth = 0.05, size = 1) +
+  guides(colour = FALSE) +
+  xlab('Citric acid content (g/dm^3)') +
+  ylab('')
+
+c3 <- ggplot(data = reds, aes(citric.acid, fill = quality)) +
+  geom_histogram(binwidth = 0.05) +
+  guides(fill = FALSE) +
+  xlab('Citric acid content (g/dm^3)') +
+  ylab('')
+
+
+a1 <- ggplot(data = reds, aes(y = alcohol, x = quality, fill = quality)) +
+  geom_boxplot() +
+  guides(fill = FALSE) +
+  ggtitle('Alcohol by quality') +
+  xlab('Quality') + 
+  ylab('Alcohol content (% by volume)')
+
+
+a2 <- ggplot(data = reds, aes(alcohol, colour = quality)) +
+  geom_freqpoly(binwidth = 0.1, size = 1) +
+  xlab('Alcohol content (% by volume)') +
+  ylab('')
+
+a3 <- ggplot(data = reds, aes(alcohol, fill = quality)) +
+  geom_histogram(binwidth = 0.1) +
+  xlab('Alcohol content (% by volume)') +
+  ylab('')
+
+grid.arrange(v1, c1, a1, v2, c2, a2, v3, c3, a3, ncol=3)
 ```
 
 ### Description Two
 
+Boxplots, frequency polygons and histograms of what the data suggest are the three most influential features, colored by each one of the six quality ratings. All these features have a moderate correlation with quality, but are not linear: they seem to flatten for the highest quality wines (volatile acidity, citric acid) or the lowest (alcohol).
+
+The plots show that the bulk of the high quality wines tend to favor low volatile acidity and high citric acid and alcohol, while the opposite happens with low quality wines. However, the difference in the number of wines per quality rating makes it somewhat difficult to visualize these trends.
 
 ### Plot Three
 ```{r echo=FALSE, Plot_Three}
-
+ggplot(data = df.extreme.quality, aes(y = citric.acid, x = alcohol, colour=quality, size=volatile.acidity)) +
+  geom_point() +
+  ggtitle('The three most influential features versus quality in extreme quality wines') +
+  xlab('Alcohol content (% by volume)') +
+  ylab('Citric acid content (g/dm^3)') +
+  scale_size_continuous(name='acetic acid (g/dm^3)')
 ```
 
 ### Description Three
+
+Quality and the three most influential variables visualized together in one plot. Wines of quality five or six are not displayed in order to avoid excessive clutter.
+
+The trends identified during the analysis are clearly shown here. The plot also shows that no combination of these three features can fully explain quality, which is expected, being the quality of a wine a rather subjective feature.
+
+It is also worth mentioning that the plot suggests that very high values of acetic acid (volatile acidity) almost always prevents a wine from achieven a high quality rating: there are a few highly rated wines with very low alcohol and citric acid content, but none with very high volatile acidity.
 
 ------
 
