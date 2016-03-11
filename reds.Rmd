@@ -62,7 +62,7 @@ My guess is that this is due to these two variables being measured in (mg / dm^3
 summary(reds)
 ```
 
-There are some variables with possible outliers: volatile.acidity, citric.acid, residual.sugar, chlorides, free and total.sulfur.dioxide and sulphates have maximum valures that are far away from the third quartile.
+There are some variables with possible outliers: volatile.acidity, citric.acid, residual.sugar, chlorides, free and total.sulfur.dioxide and sulphates have maximum values that are far away from the third quartile.
 
 # Univariate Plots Section
 ```{r echo=FALSE, Univariate_Plots}
@@ -528,3 +528,13 @@ It is also worth mentioning that the plot suggests that very high values of acet
 ------
 
 # Reflection
+
+The red wines dataset contains almost 1600 observations and 12 features, plus one identifier variable. Eleven of these features are objective measurements (e.g. pH, alcohol content...) and the last one is a subjective quality rating calculated by taking the median of the scores assigned by three or more experts, in a scale of zero to ten.
+
+The subjective nature of quality and the way it is calculated present the major challenges when analysing the data. 
+
+Its subjective nature makes it difficult to find a definitive answer to what determines the quality of a wine. In fact, there is not a single strong correlation between quality and other features, although some of them seem to be more influential than others. However, the data exploration performed suggests there is no combination of features that can accurately predict quality. This is supported by the study (REFERENCIA AQUI) performed by the authors of the dataset: none of the models could predict the exact quality rating for about 35-40 percent of the wines.
+
+The way this quality rating is calculated (median of subjective evaluations) probably explains why most of the wines are of quality five or six. This makes visual analyses troublesome, since most observations just add clutter and it is hard to identify trends from them. Furthermore, the scarcity of wines of extreme quality it is an invitation to be very cautious about the conclusions extracted from their analysis, since the sample may be too small. 
+
+Despite these complications, some trends and three influential features were identified. The plots provided show that the bulk of low and high quality wines can be separated based on these features.
