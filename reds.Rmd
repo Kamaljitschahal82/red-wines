@@ -25,8 +25,8 @@ library(memisc)
 
 ```{r echo=FALSE, Load_the_Data}
 # Load the Data
-#setwd("E:/Dropbox/estudios/dataAnalyst/p4/p4_explore")
-setwd("C:/Users/Administrador/Dropbox/estudios/dataAnalyst/p4/p4_explore")
+setwd("E:/Dropbox/estudios/dataAnalyst/p4/p4_explore")
+#setwd("C:/Users/Administrador/Dropbox/estudios/dataAnalyst/p4/p4_explore")
 reds <- read.csv('wineQualityReds.csv')
 ```
 
@@ -218,7 +218,8 @@ Several variables had large outliers. I created a cropped version of some of the
 ```{r echo=FALSE, Bivariate_Plots}
 ggpairs(subset(reds, select = -id), 
   lower = list(continuous = wrap("points", shape = I('.'))), 
-  upper = list(combo = wrap("box", outlier.shape = I('.'))))
+  upper = list(combo = wrap("box", outlier.shape = I('.'))),
+  axisLabels="internal")
 ```
 
 The boxplots in the matrix show correlations between quality and other variables: volatile.acidity, citric.acid, sulphates and alcohol. The variables density and pH might be related too, but this could be because these variables are correlated with others: pH with citric.acid and density with alcohol and citric.acid.
@@ -503,7 +504,7 @@ grid.arrange(v1, c1, a1, v2, c2, a2, v3, c3, a3, ncol=3)
 
 ### Description Two
 
-Boxplots, frequency polygons and histograms of what the data suggest are the three most influential features, colored by each one of the six quality ratings. All these features have a moderate correlation with quality, but are not linear: they seem to flatten for the highest quality wines (volatile acidity, citric acid) or the lowest (alcohol).
+Boxplots, frequency polygons and histograms of what the data suggest are the three most influential features, colored by each one of the six quality ratings. All these features have a weak or moderate correlation with quality, but are not linear: they seem to flatten for the highest quality wines (volatile acidity, citric acid) or the lowest (alcohol).
 
 The plots show that the bulk of the high quality wines tend to favor low volatile acidity and high citric acid and alcohol, while the opposite happens with low quality wines. However, the difference in the number of wines per quality rating makes it somewhat difficult to visualize these trends.
 
