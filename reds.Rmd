@@ -42,7 +42,7 @@ reds <- plyr::rename(reds, c("X"="id"))
 str(reds)
 ```
 
-The variable _quality_ has a very limited number of values. We can convert it to a factor:
+The variable _quality_ has a very limited number of values. We can convert it to a factor.
 
 ```{r}
 reds$quality <- factor(reds$quality)
@@ -92,7 +92,7 @@ c2 <- ggplot(data = reds, aes(x = citric.acid)) +
 grid.arrange(c1, c2, ncol=1)
 ```
 
-The variable _citric.acid_ is very skewed to the right. The log transform shows a peak between 0.4 and 0.6.
+The variable _citric.acid_ is very skewed to the right. The log transform shows a peak between 0.4 and 0.5.
 
 
 ```{r}
@@ -189,7 +189,7 @@ An overwhelming majority of wines, about 1300 of the total 1599, are rated five 
 
 ### What is the structure of your dataset?
 
-There are 1599 red wines in the dataset with 12 features and an identifier number. Except _quality_, which is discrete, the rest of the features are continuous, althogh most of the values of _free.sulfur.dioxide_ and _total.sulfur.dioxide_ are whole.
+There are 1599 red wines in the dataset with twelve features and an identifier number. Except _quality_, which is discrete, the rest of the features are continuous, although most of the values of _free.sulfur.dioxide_ and _total.sulfur.dioxide_ are whole.
 
 ### What is/are the main feature(s) of interest in your dataset?
 
@@ -197,9 +197,9 @@ The main feature is _quality_. I would like to know if and which ones of the oth
 
 ### What other features in the dataset do you think will help support your investigation into your feature(s) of interest?
 
-The info provided by the authors of the dataset gives a few tips about which variables can affect the quality of the wine but it is far from comprehensive.
+The info provided by the authors of the dataset gives a few tips about which variables can affect the quality of the wine, but it is far from comprehensive.
 
-Given that most wines are rated of medium quality (five or six in a scale of zero to ten), and the fact that there are several variables with very distant outliers, points me to think that very small or very large values of certain variables are fundamental in the creation of non-average wines.
+Given that most wines are rated of medium quality (five or six in a scale of zero to ten), and the fact that there are several variables with very distant outliers, points me to think that very small or very large values of certain features are fundamental in the creation of non-average wines.
 
 ### Did you create any new variables from existing variables in the dataset?
 
@@ -242,8 +242,8 @@ grid.arrange(v1, v2, ncol=1)
 
 
 It looks like as volatile acidity increases, quality decreases, although there are two observations worth mentioning:
-- Wines with a quality score of seven and eight (the best of the dataset) have similar median volatile acidity. However, the volatile acidity of wines with a quality of seven is more dispersed.
-- Outliers with a quality of seven and eight have a volatile acidity similar to the median of the worst rated wines: volatile acidity alone cannot explain the differences in quality.
+* Wines with a quality score of seven and eight (the best of the dataset) have similar median volatile acidity. However, the volatile acidity of wines with a quality of seven is more dispersed.
+* Outliers with a quality of seven and eight have a volatile acidity similar to the median of the worst rated wines: volatile acidity alone cannot explain the differences in quality.
 
 These findings agree with the information provided by the authors of the dataset: "too high levels can lead to an unpleasant, vinegar taste".
 
@@ -308,9 +308,9 @@ ggplot(data = reds, aes(y = pH, x = quality)) +
   geom_boxplot()
 ```
 
-This is similar to the last case. Can we detect with our sense of taste differences in pH of one unit maximum?. Maybe this is cause by the existing negative correlation between _pH_ and _citric.acid_.
+This is similar to the last case. Can we detect with our sense of taste differences in pH of one unit maximum?. Maybe this is caused by the existing negative correlation between _pH_ and _citric.acid_.
 
-There are correlations of moderate strength (REFERENCIA AQUÍ) between some of these variables. It might be interesting to have a closer look:
+There are correlations of [moderate strength](https://books.google.es/books/about/Straightforward_Statistics_for_the_Behav.html?id=8Ca2AAAAIAAJ) between some of these variables. It might be interesting to have a closer look:
 
 ```{r}
 ggplot(data = reds, aes(y = volatile.acidity, x = citric.acid)) +
@@ -324,14 +324,14 @@ ggplot(data = reds, aes(y = pH, x = citric.acid)) +
 
 Both _volatile.acidity_ and _pH_ are negatively correlated with _citric.acid_. The latter makes sense: low pH values indicate acidity.
 
-The relation between acetic acid (_volatile.acidity_) and citric acid is not that clear. Acordding to Wikipedia (REFERENCIA AQUÍ): "When citric acid is added, it is always done after primary alcohol fermentation has been completed due to the tendency of yeast to convert citric into acetic acid." Maybe low levels of citric acid are a sign that it was added prematurely.
+The relation between acetic acid (_volatile.acidity_) and citric acid is not that clear. Acordding to [Wikipedia](https://en.wikipedia.org/wiki/Acids_in_wine): "When citric acid is added, it is always done after primary alcohol fermentation has been completed due to the tendency of yeast to convert citric into acetic acid." Maybe low levels of citric acid are a sign that it was added prematurely.
 
 ```{r}
 ggplot(data = reds, aes(y = density, x = alcohol)) +
   geom_point()
 ```
 
-High levels of alcohol are asociated with low density, which makes sense, since alcohol is less dense than water: the main component of wine. (REFERENCIA AQUÍ)
+High levels of alcohol are asociated with low density, which makes sense, since alcohol is less dense than water, the [main component](http://www.terroir-france.com/wine/components.htm) of wine.
 
 # Bivariate Analysis
 
@@ -539,7 +539,7 @@ The red wines dataset contains almost 1600 observations and twelve features, plu
 
 The subjective nature of quality and the way it is calculated present the major challenges when analysing the data. 
 
-Its subjective nature makes it difficult to find a definitive answer to what determines the quality of a wine. In fact, there is not a single strong correlation between quality and other features, although some of them seem to be more influential than others. However, the data exploration performed suggests there is no combination of features that can accurately predict quality. This is supported by the study (REFERENCIA AQUI) performed by the authors of the dataset: none of the models could predict the exact quality rating for about 35-40 percent of the wines.
+Its subjective nature makes it difficult to find a definitive answer to what determines the quality of a wine. In fact, there is not a single strong correlation between quality and other features, although some of them seem to be more influential than others. However, the data exploration performed suggests there is no combination of features that can accurately predict quality. This is supported by the [study](http://projects.csail.mit.edu/wiki/pub/Evodesign/SensoryEvaluationsDatabase/winequality09.pdf) performed by the authors of the dataset: none of the models could predict the exact quality rating for about 35-40 percent of the wines.
 
 The way this quality rating is calculated (median of subjective evaluations) probably explains why most of the wines are of quality five or six. This makes visual analyses troublesome, since most observations just add clutter and it is hard to identify trends from them. Furthermore, the scarcity of wines of extreme quality is an invitation to be very cautious about the conclusions extracted from their analysis, since the sample may be too small. 
 
