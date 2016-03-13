@@ -242,7 +242,9 @@ grid.arrange(v1, v2, ncol=1)
 
 
 It looks like as volatile acidity increases, quality decreases, although there are two observations worth mentioning:
+
 * Wines with a quality score of seven and eight (the best of the dataset) have similar median volatile acidity. However, the volatile acidity of wines with a quality of seven is more dispersed.
+
 * Outliers with a quality of seven and eight have a volatile acidity similar to the median of the worst rated wines: volatile acidity alone cannot explain the differences in quality.
 
 These findings agree with the information provided by the authors of the dataset: "too high levels can lead to an unpleasant, vinegar taste".
@@ -542,5 +544,11 @@ The subjective nature of quality and the way it is calculated present the major 
 Its subjective nature makes it difficult to find a definitive answer to what determines the quality of a wine. In fact, there is not a single strong correlation between quality and other features, although some of them seem to be more influential than others. However, the data exploration performed suggests there is no combination of features that can accurately predict quality. This is supported by the [study](http://projects.csail.mit.edu/wiki/pub/Evodesign/SensoryEvaluationsDatabase/winequality09.pdf) performed by the authors of the dataset: none of the models could predict the exact quality rating for about 35-40 percent of the wines.
 
 The way this quality rating is calculated (median of subjective evaluations) probably explains why most of the wines are of quality five or six. This makes visual analyses troublesome, since most observations just add clutter and it is hard to identify trends from them. Furthermore, the scarcity of wines of extreme quality is an invitation to be very cautious about the conclusions extracted from their analysis, since the sample may be too small. 
+
+I think the analysis could be improved with more data:
+
+* Access to the individual evaluations for every wine could give some insights about the shape of the _quality_ distribution: is the scarcity of wines of low and high quality due to calculating the median of very dispersed scores?
+
+* In order to be sure about the trends identified, more observations of wines of extreme quality may help, specially if there were wines in the dataset with quality ratings below three and above eight, to check if those trends are still present. Maybe a quality scale from zero to ten is too fine-grained for subjective evaluations, and a shorter one could help the quality of the data.
 
 Despite these complications, some trends and three influential features were identified. The plots provided show that the bulk of low and high quality wines can be separated based on these features.
