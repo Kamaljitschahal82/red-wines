@@ -310,7 +310,7 @@ ggplot(data = reds, aes(y = pH, x = quality)) +
 
 This is similar to the last case. Can we detect with our sense of taste differences in pH of one unit maximum?. Maybe this is cause by the existing negative correlation between pH and citric.acid.
 
-There are correlations of moderate strength (~ 0.5) (REFERENCIA AQUÍ) between some of these variables. It might be interesting to have a closer look:
+There are correlations of moderate strength (REFERENCIA AQUÍ) between some of these variables. It might be interesting to have a closer look:
 
 ```{r}
 ggplot(data = reds, aes(y = volatile.acidity, x = citric.acid)) +
@@ -339,11 +339,11 @@ High levels of alcohol are asociated with low density, which makes sense, since 
 
 The data suggests that alcohol, citric.acid and volatile.acidity are the most decisive features for the quality of a wine, having the first two a positive correlation with quality and the latter a negative one. However, a far from negligible number of wines of any quality can be found along (almost) the whole spectrum of these features: none of them alone nor combined can fully explain quality, not even close.
 
-Another three features are weakly (~ +-0.2) correlated with quality: sulphates, density and pH.
+Another three features are weakly correlated with quality: sulphates, density and pH.
 
 ### Did you observe any interesting relationships between the other features (not the main feature(s) of interest)?
 
-Citric.acid is negatively correlated with both volatile.acidity and pH (~ -0.5). Alcohol is inversely correlated with density (~ 0.5). This may explain why density and pH, that are (I presume) hard to detect without tools are correlated with quality, even if weakly.
+Citric.acid is negatively correlated with both volatile.acidity and pH. Alcohol is inversely correlated with density. This may explain why density and pH, that are (I presume) hard to detect without tools are correlated with quality, even if weakly.
 
 ### What was the strongest relationship you found?
 
@@ -413,7 +413,7 @@ The three most influential features (alcohol, citric.acid and volatile.acidity) 
 
 ### Were there any interesting or surprising interactions between features?
 
-It looks like very high volatile.acidity values almost completely prevent a wine to achieve a high quality rating. There are some high rated wines with very low citric acid and alcohol content, and even with a slightly high volatile acidity (~0.8), but higher than that there is almost none. 
+It looks like very high volatile.acidity values almost completely prevent a wine to achieve a high quality rating. There are some high rated wines with very low citric acid and alcohol content, and even with a slightly high volatile acidity (around 0.8), but higher than that there is almost none. 
 
 It is like there is a threshold at approximately 0.8-0.9 g/dm^3^ of acetic acid from which the unpleasant vinegar taste, described by the authors of the dataset, is noted.
 
