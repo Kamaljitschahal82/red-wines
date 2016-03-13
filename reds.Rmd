@@ -518,9 +518,9 @@ The plots show that the bulk of the high quality wines tend to favor low volatil
 ggplot(data = df.extreme.quality, aes(y = citric.acid, x = alcohol, colour=quality, size=volatile.acidity)) +
   geom_point() +
   ggtitle('The three most influential features versus quality in extreme quality wines') +
-  xlab('Alcohol content (% by volume)') +
-  ylab('Citric acid content (g/dm^3)') +
-  scale_size_continuous(name='acetic acid (g/dm^3)')
+  xlab(alcohol_label) +
+  ylab(citric_label) +
+  scale_size_continuous(name=expression("acetic acid" ~ (g/dm^{3})))
 ```
 
 ### Description Three
