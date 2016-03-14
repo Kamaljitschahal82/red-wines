@@ -25,8 +25,8 @@ library(memisc)
 
 ```{r echo=FALSE, Load_the_Data}
 # Load the Data
-setwd("E:/Dropbox/estudios/dataAnalyst/p4/p4_explore")
-#setwd("C:/Users/Administrador/Dropbox/estudios/dataAnalyst/p4/p4_explore")
+#setwd("E:/Dropbox/estudios/dataAnalyst/p4/p4_explore")
+setwd("C:/Users/Administrador/Dropbox/estudios/dataAnalyst/p4/p4_explore")
 reds <- read.csv('wineQualityReds.csv')
 ```
 
@@ -438,7 +438,7 @@ ggplot(data = reds, aes(x = quality, fill = quality)) +
 
 ### Description One
 
-A very big majority of wines are of quality five or six. There are very few of quality three or eight, and no wine achieves a more extreme quality rating: of a scale of zero to ten, there are no wines with a quality rating of zero, one, two, nine or ten.
+A very big majority of wines are of quality five or six: 681 + 638 of a total of 1599, i.e. approximately 82.5% of the wines. There are very few of quality three or eight (10 and 18, respectively), and no wine achieves a more extreme quality rating: of a scale of zero to ten, there are no wines with a quality rating of zero, one, two, nine or ten.
 
 This is probably due to the way the wines are rated. According to the information provided by the authors: "the output is based on sensory data (median of at least 3 evaluations made by wine experts)". Unfortunately, we do not have the individual evaluations for each wine, so we cannot know how dispersed are these.
 
@@ -447,7 +447,6 @@ This is probably due to the way the wines are rated. According to the informatio
 acetic_label <- expression("Acetic acid content" ~ (g/dm^{3}))
 citric_label <- expression("Citric acid content" ~ (g/dm^{3}))
 alcohol_label <- "Alcohol content (% by volume)"
-no_wines_label <- "Number of wines"
 
 v1 <- ggplot(data = reds, aes(y = volatile.acidity, x = quality, fill = quality)) +
   geom_boxplot() +
@@ -456,37 +455,12 @@ v1 <- ggplot(data = reds, aes(y = volatile.acidity, x = quality, fill = quality)
   xlab('Quality') + 
   ylab(acetic_label)
 
-v2 <- ggplot(data = reds, aes(volatile.acidity, colour = quality)) +
-  geom_freqpoly(binwidth = 0.05, size = 1) +
-  guides(colour = FALSE) +
-  xlab(acetic_label) + 
-  ylab(no_wines_label)
-
-v3 <- ggplot(data = reds, aes(volatile.acidity, fill = quality)) +
-  geom_histogram(binwidth = 0.05) +
-  guides(fill = FALSE) +
-  xlab(acetic_label) + 
-  ylab(no_wines_label)
-
 c1 <- ggplot(data = reds, aes(y = citric.acid, x = quality, fill = quality)) +
   geom_boxplot() +
   guides(fill = FALSE) +
   ggtitle('Citric acid by quality') +
   xlab('Quality') + 
   ylab(citric_label)
-
-c2 <- ggplot(data = reds, aes(citric.acid, colour = quality)) +
-  geom_freqpoly(binwidth = 0.05, size = 1) +
-  guides(colour = FALSE) +
-  xlab(citric_label) +
-  ylab('')
-
-c3 <- ggplot(data = reds, aes(citric.acid, fill = quality)) +
-  geom_histogram(binwidth = 0.05) +
-  guides(fill = FALSE) +
-  xlab(citric_label) +
-  ylab('')
-
 
 a1 <- ggplot(data = reds, aes(y = alcohol, x = quality, fill = quality)) +
   geom_boxplot() +
@@ -495,25 +469,16 @@ a1 <- ggplot(data = reds, aes(y = alcohol, x = quality, fill = quality)) +
   xlab('Quality') + 
   ylab(alcohol_label)
 
-
-a2 <- ggplot(data = reds, aes(alcohol, colour = quality)) +
-  geom_freqpoly(binwidth = 0.1, size = 1) +
-  xlab(alcohol_label) +
-  ylab('')
-
-a3 <- ggplot(data = reds, aes(alcohol, fill = quality)) +
-  geom_histogram(binwidth = 0.1) +
-  xlab(alcohol_label) +
-  ylab('')
-
-grid.arrange(v1, c1, a1, v2, c2, a2, v3, c3, a3, ncol=3)
+grid.arrange(v1, c1, a1, ncol=2)
 ```
 
 ### Description Two
 
-Boxplots, frequency polygons and histograms of what the data suggest are the three most influential features, colored by each one of the six quality ratings. All these features have a weak or moderate correlation with quality, but are not linear: they seem to flatten for the highest quality wines (_volatile.acidity_, _citric.acid_) or the lowest (_alcohol_).
+Boxplots of what the data suggest are the three most influential features, colored by each one of the six quality ratings. All these features have a weak or moderate correlation with quality, but are not linear: they seem to flatten for the highest quality wines (_volatile.acidity_, _citric.acid_) or the lowest (_alcohol_).
 
-The plots show that the bulk of the high quality wines tend to favor low volatile acidity and high citric acid and alcohol, while the opposite happens with low quality wines. However, the difference in the number of wines per quality rating makes it somewhat difficult to visualize these trends.
+In fact, the median _volatile.acidity_ of wines of quality seven and eight is exactly the same (0.37) and the inter-quartile range is similar (0.185 and 0.1375). A similar situation happens with _citric.acid_: medians of 0.4 and 0.42, IQRs of 0.185 and 0.2275. In the case of _alcohol_, wines of quality below six share similar median values of alcohol content (9.925, 10, 9.7), and the IQRs of wines of quality three and five are also similar (0.85, 0.8), although for wines of quality four is more dispersed (1.4)
+
+In all the plots, every box overlaps horizontally at least with the ones on the left and right. Since boxes delimit the first and third quartiles, that comprise half of the observations in a normal distribution, this shows that none of these features alone can be used to accurately predict quality.
 
 ### Plot Three
 ```{r echo=FALSE, Plot_Three}
@@ -529,9 +494,11 @@ ggplot(data = df.extreme.quality, aes(y = citric.acid, x = alcohol, colour=quali
 
 _Quality_ and the three most influential variables visualized together in one plot. Wines of quality five or six are not displayed in order to avoid excessive clutter.
 
-The trends identified during the analysis are clearly shown here. The plot also shows that no combination of these three features can fully explain _quality_, which is expected, being the quality of a wine a rather subjective feature.
+The plots show that the bulk of the high quality wines tend to favor low volatile acidity and high citric acid and alcohol, while the opposite happens with low quality wines. The plot also shows that the different colors and sizes are not completely separated, which indicates that no combination of these three features can fully explain _quality_, which is expected, being the quality of a wine a rather subjective feature.
 
 It is also worth mentioning that the plot suggests that very high values of acetic acid almost always prevents a wine from achieving a high quality rating: there are a few highly rated wines with very low alcohol and citric acid content, but none with very high volatile acidity.
+
+In fact, the maximum acetic acid content found in wines of quality seven and eight is 0.915 and 0.85 g/dm^3^ respectively. Following a [common criteria](https://en.wikipedia.org/wiki/Interquartile_range#Interquartile_range_and_outliers) for identifying outliers (observations that fall below Q1 - 1.5 * IQR or above Q3 + 1.5 * IQR), these values are clearly outliers within their quality group (above 0.7625 and 0.67875, respectively) but not within the whole _volatile.acidity_ distribution (below 1.015).
 
 ------
 

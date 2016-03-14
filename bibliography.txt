@@ -2,3 +2,4 @@ https://books.google.es/books/about/Straightforward_Statistics_for_the_Behav.htm
 http://www.terroir-france.com/wine/components.htm
 https://en.wikipedia.org/wiki/Acids_in_wine
 http://projects.csail.mit.edu/wiki/pub/Evodesign/SensoryEvaluationsDatabase/winequality09.pdf
+https://en.wikipedia.org/wiki/Interquartile_range#Interquartile_range_and_outliers
