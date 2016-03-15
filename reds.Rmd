@@ -386,7 +386,7 @@ p3 <- ggplot(data = reds, aes(y = volatile.acidity, x = citric.acid, colour=qual
 grid.arrange(p1, p2, p3, ncol=1)
 ```
 
-Scatter plots of the main variables, colored by _quality_. We can see the linear correlation between _volatile.acidity_ and _citric.acid_, mention aboved, and also that there is no linear correlation between _alcohol_ and _citric.acid_. Unfortunately, there are so many wines of quality five and six that it is hard to grasp more detailed information. We are going to examine these same plots, but removing these wines:
+Scatter plots of the main variables, colored by _quality_. We can see the linear correlation between _volatile.acidity_ and _citric.acid_ (-0.552), mention aboved, and also that there is no linear correlation between _alcohol_ and _citric.acid_ (0.11). The correlation coefficient of _alcohol_ and _volatile.acidity_ is -0.202. Unfortunately, there are so many wines of quality five and six that it is hard to grasp more detailed information. We are going to examine these same plots, but removing these wines:
 
 ```{r echo=FALSE}
 df.extreme.quality <- subset(reds, quality != 6 & quality != 5)
