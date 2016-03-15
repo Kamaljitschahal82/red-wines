@@ -64,11 +64,22 @@ summary(reds)
 
 There are some variables with possible outliers: _volatile.acidity_, _citric.acid_, _residual.sugar_, _chlorides_, _free.sulfur.dioxide_ and _total.sulfur.dioxide_ and _sulphates_ have maximum values that are far away from the third quartile.
 
+For the future, it would be interesting to have a summary of the dataset per quality rating:
+
+```{r}
+by(reds, reds$quality, summary)
+```
+
+
 # Univariate Plots Section
 ```{r echo=FALSE, Univariate_Plots}
 ggplot(data = reds, aes(x = fixed.acidity)) +
   geom_histogram(binwidth = 0.5) +
-  scale_x_continuous(breaks = seq(4, 16, 1), limits = c(4, 16))
+  scale_x_continuous(breaks = seq(4, 16, 1), limits = c(4, 16)) +
+  geom_vline(aes(xintercept=mean(fixed.acidity)), color="red", linetype="dashed", size=1) +
+  geom_vline(aes(xintercept=median(fixed.acidity)), color="blue", size=1) +
+  geom_vline(aes(xintercept=quantile(fixed.acidity,0.25)), color="green", linetype="dotted", size=1) +
+  geom_vline(aes(xintercept=quantile(fixed.acidity,0.75)), color="green", linetype="dotted", size=1)
 ```
 
 ```{r}
@@ -316,24 +327,27 @@ There are correlations of [moderate strength](https://books.google.es/books/abou
 
 ```{r}
 ggplot(data = reds, aes(y = volatile.acidity, x = citric.acid)) +
-  geom_point()
+  geom_point() +
+  geom_smooth(method=lm)
 ```
 
 ```{r}
 ggplot(data = reds, aes(y = pH, x = citric.acid)) +
-  geom_point()
+  geom_point() +
+  geom_smooth(method=lm)
 ```
 
-Both _volatile.acidity_ and _pH_ are negatively correlated with _citric.acid_. The latter makes sense: low pH values indicate acidity.
+Both _volatile.acidity_ and _pH_ are negatively correlated with _citric.acid_ (-0.552 and -0542, respectively). The latter makes sense: low pH values indicate acidity.
 
 The relation between acetic acid (_volatile.acidity_) and citric acid is not that clear. Acordding to [Wikipedia](https://en.wikipedia.org/wiki/Acids_in_wine): "When citric acid is added, it is always done after primary alcohol fermentation has been completed due to the tendency of yeast to convert citric into acetic acid." Maybe low levels of citric acid are a sign that it was added prematurely.
 
 ```{r}
 ggplot(data = reds, aes(y = density, x = alcohol)) +
-  geom_point()
+  geom_point() +
+  geom_smooth(method=lm)
 ```
 
-High levels of alcohol are asociated with low density, which makes sense, since alcohol is less dense than water, the [main component](http://www.terroir-france.com/wine/components.htm) of wine.
+High levels of alcohol are asociated with low density (-0.496), which makes sense, since alcohol is less dense than water, the [main component](http://www.terroir-france.com/wine/components.htm) of wine.
 
 # Bivariate Analysis
 
