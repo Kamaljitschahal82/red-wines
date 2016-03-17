@@ -72,118 +72,120 @@ by(reds, reds$quality, summary)
 
 
 # Univariate Plots Section
+```{r}
+# Creates histogram with the given dataframe, variable and binwidth. Add vertical lines with common statistics: average, median, q1 and q3.
+stat_lines <- function(dataf, x, binwidth) {
+    plot <- ggplot(dataf, aes(dataf[,x])) +
+      geom_histogram(binwidth = binwidth) +
+      geom_vline(aes(xintercept=mean(dataf[,x]), color="Average"), linetype="dashed", size=1, show.legend = TRUE) +
+      geom_vline(aes(xintercept=median(dataf[,x]), color="Median"), size=1) +
+      geom_vline(aes(xintercept=quantile(dataf[,x],0.25), color="Q1"), linetype="dotted", size=1) +
+      geom_vline(aes(xintercept=quantile(dataf[,x],0.75), color="Q3"), linetype="dotted", size=1) +
+      scale_colour_manual(name="Stats", values=c(Average="red", Median="blue", Q1="green", Q3="green")) +
+      scale_linetype_manual(name="Stats", values=c(Average="dashed",Median="solid")) +
+      xlab(x)
+    return(plot)
+}
+```
+
+
 ```{r echo=FALSE, Univariate_Plots}
-ggplot(data = reds, aes(x = fixed.acidity)) +
-  geom_histogram(binwidth = 0.5) +
-  scale_x_continuous(breaks = seq(4, 16, 1), limits = c(4, 16)) +
-  geom_vline(aes(xintercept=mean(fixed.acidity)), color="red", linetype="dashed", size=1) +
-  geom_vline(aes(xintercept=median(fixed.acidity)), color="blue", size=1) +
-  geom_vline(aes(xintercept=quantile(fixed.acidity,0.25)), color="green", linetype="dotted", size=1) +
-  geom_vline(aes(xintercept=quantile(fixed.acidity,0.75)), color="green", linetype="dotted", size=1)
+hist_fixed <- stat_lines(reds,"fixed.acidity", 0.5) + 
+  scale_x_continuous(breaks = seq(4, 16, 1), limits = c(4, 16))
+print(hist_fixed)
 ```
 
 ```{r}
-ggplot(data = reds, aes(x = volatile.acidity)) +
-  geom_histogram(binwidth = 0.05) +
+hist_volatile <- stat_lines(reds,"volatile.acidity", 0.05) + 
   scale_x_continuous(breaks = seq(0, 2, 0.1), limits = c(0, 2))
+print(hist_volatile)
 ```
 
 The variables _fixed.acidity_ and _volatile.acidity_ look normally distributed.
 
 
 ```{r}
-c1 <- ggplot(data = reds, aes(x = citric.acid)) +
-  geom_histogram(binwidth = 0.05) +
+hist_citric1 <- stat_lines(reds,"citric.acid", 0.05) + 
   scale_x_continuous(breaks = seq(0, 1.2, 0.1), limits = c(0, 1.2))
 
-c2 <- ggplot(data = reds, aes(x = citric.acid)) +
-  geom_histogram(binwidth = 0.05) +
+hist_citric2 <- stat_lines(reds,"citric.acid", 0.05) + 
   scale_x_log10(breaks = seq(0, 1.2, 0.1))
 
-grid.arrange(c1, c2, ncol=1)
+grid.arrange(hist_citric1, hist_citric2, ncol=1)
 ```
 
 The variable _citric.acid_ is very skewed to the right. The log transform shows a peak between 0.4 and 0.5.
 
-
 ```{r}
-r1 <- ggplot(data = reds, aes(x = residual.sugar)) +
-  geom_histogram(binwidth = 0.1)
+hist_residual1 <- stat_lines(reds,"residual.sugar", 0.1)
 
-r2 <- ggplot(data = reds, aes(x = residual.sugar)) +
-  geom_histogram(binwidth = 0.1) +
+hist_residual2 <- stat_lines(reds,"residual.sugar", 0.1) +
   scale_x_continuous(breaks = seq(0, 3.5, 0.5), limits = c(0, 3.5))
 
-grid.arrange(r1, r2, ncol=1)
+grid.arrange(hist_residual1, hist_residual2, ncol=1)
 ```
 
 ```{r}
-ch1 <- ggplot(data = reds, aes(x = chlorides)) +
-  geom_histogram(binwidth = 0.005)
+hist_chlorides1 <- stat_lines(reds,"chlorides", 0.005)
 
-ch2 <- ggplot(data = reds, aes(x = chlorides)) +
-  geom_histogram(binwidth = 0.005) +
+hist_chlorides2 <- stat_lines(reds,"chlorides", 0.005) +
   scale_x_continuous(breaks = seq(0, 0.15, 0.05), limits = c(0, 0.15))
 
-grid.arrange(ch1, ch2, ncol=1)
+grid.arrange(hist_chlorides1, hist_chlorides2, ncol=1)
 ```
 
 The variables _residual.sugar_ and _chlorides_ look normally distributed, but both have very distant outliers. 
 
 ```{r}
-fsd1 <- ggplot(data = reds, aes(x = free.sulfur.dioxide)) +
-  geom_histogram(binwidth = 1) +
+hist_free1 <- stat_lines(reds,"free.sulfur.dioxide", 1) +
   scale_x_continuous(breaks = seq(0, 80, 5))
 
-fsd2 <- ggplot(data = reds, aes(x = free.sulfur.dioxide)) +
-  geom_histogram(binwidth = 0.1) +
+hist_free2 <- stat_lines(reds,"free.sulfur.dioxide", 0.1) +
   scale_x_log10(breaks = seq(0, 80, 10))
 
-grid.arrange(fsd1, fsd2, ncol=1)
+grid.arrange(hist_free1, hist_free2, ncol=1)
 ```
 
 ```{r}
-tsd1 <- ggplot(data = reds, aes(x = total.sulfur.dioxide)) +
-  geom_histogram(binwidth = 5) +
-  scale_x_continuous(breaks = seq(0, 290, 10))
+hist_total1 <- stat_lines(reds,"total.sulfur.dioxide", 5) +
+  scale_x_continuous(breaks = seq(0, 290, 20))
 
-tsd2 <- ggplot(data = reds, aes(x = total.sulfur.dioxide)) +
-  geom_histogram(binwidth = 0.1) +
-  scale_x_log10(breaks = seq(0, 290, 25))
+hist_total2 <- stat_lines(reds,"total.sulfur.dioxide", 0.1) +
+  scale_x_log10(breaks = seq(0, 290, 40))
 
-grid.arrange(tsd1, tsd2, ncol=1)
+grid.arrange(hist_total1, hist_total2, ncol=1)
 ```
 
 Both _free.sulfur.dioxide_ and _total.sulfur.dioxide_ are skewed to the right. The latter has very distant outliers. They look normally distributed when a log-transform is applied.
 
 ```{r}
-ggplot(data = reds, aes(x = density)) +
-  geom_histogram(binwidth = 0.0005)
+hist_density = stat_lines(reds,"density", 0.0005)
+
+print(hist_density)
 ```
 
 ```{r}
-ggplot(data = reds, aes(x = pH)) +
-  geom_histogram(binwidth = 0.05)
+hist_pH = stat_lines(reds,"pH", 0.05)
+
+print(hist_pH)
 ```
 
 Both _density_ and _pH_ look normally distributed.
 
 ```{r}
-ggplot(data = reds, aes(x = sulphates)) +
-  geom_histogram(binwidth = 0.05)
+hist_sulphates = stat_lines(reds,"sulphates", 0.05)
+print(hist_sulphates)
 ```
 
 The variable _sulphates_ looks normally distributed, with some outliers.
 
 ```{r}
-a1 <- ggplot(data = reds, aes(x = alcohol)) +
-  geom_histogram(binwidth = 0.1)
+hist_alcohol1 <- stat_lines(reds,"alcohol", 0.1)
 
-a2 <- ggplot(data = reds, aes(x = alcohol)) +
-  geom_histogram(binwidth = 0.01) +
+hist_alcohol2 <- stat_lines(reds,"alcohol", 0.01) +
   scale_x_log10()
 
-grid.arrange(a1, a2, ncol=1)
+grid.arrange(hist_alcohol1, hist_alcohol2, ncol=1)
 ```
 
 The variable _alcohol_ is skewed to the right. Applying a log-transform does not change much.
@@ -194,7 +196,7 @@ ggplot(data = reds, aes(x = quality)) +
   scale_x_discrete(breaks = seq(0, 10, 1))
 ```
 
-An overwhelming majority of wines, about 1300 of the total 1599, are rated five or siz, and about 200 are rated seven. The rest are rated three, four or eight.
+An overwhelming majority of wines, about 1300 of the total 1599, are rated five or six, and about 200 are rated seven. The rest are rated three, four or eight.
 
 # Univariate Analysis
 

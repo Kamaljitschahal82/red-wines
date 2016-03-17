@@ -3,3 +3,4 @@ http://www.terroir-france.com/wine/components.htm
 https://en.wikipedia.org/wiki/Acids_in_wine
 http://projects.csail.mit.edu/wiki/pub/Evodesign/SensoryEvaluationsDatabase/winequality09.pdf
 https://en.wikipedia.org/wiki/Interquartile_range#Interquartile_range_and_outliers
+https://discussions.udacity.com/t/custom-function-to-add-stat-lines-to-histograms/160636
